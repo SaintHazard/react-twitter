@@ -7,6 +7,7 @@ import {
     GoogleAuthProvider,
     GithubAuthProvider,
     signInWithPopup,
+    updateProfile,
 } from "firebase/auth";
 import {
     getFirestore,
@@ -17,6 +18,9 @@ import {
     deleteDoc,
     doc,
     updateDoc,
+    query,
+    where,
+    orderBy,
 } from "firebase/firestore";
 
 import {
@@ -66,9 +70,14 @@ export const addDocument = async (path, data) => {
     await addDoc(collection(dbService, path), data);
 };
 
-export const getDocuments = async (path) => {
-    const data = await getDocs(collection(dbService, path));
-    return data;
+export const getDocuments = async (path, uid) => {
+    const q = query(
+        collection(dbService, path),
+        where("creatorId", "==", uid),
+        orderBy("createdAt"),
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs;
 };
 
 export const deleteDocument = async (path, id) => {
@@ -98,4 +107,8 @@ export const uploadAttachment = async (uid, attachment) => {
 
 export const deleteAttachment = async (attachmentUrl) => {
     await deleteObject(ref(storageService, attachmentUrl));
+};
+
+export const updateMyProfile = async (data) => {
+    await updateProfile(authService.currentUser, data);
 };

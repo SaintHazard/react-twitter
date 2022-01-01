@@ -25,7 +25,7 @@ const Home = ({ userObj }) => {
 
         const newNweet = {
             text: nweet,
-            createAt: Date.now(),
+            createdAt: Date.now(),
             creatorId: userObj.uid,
             attachmentUrl: "",
         };
