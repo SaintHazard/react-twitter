@@ -8,7 +8,6 @@ function App() {
 
     useEffect(() => {
         authService.onAuthStateChanged((user) => {
-            console.log(user);
             setUserObj({
                 displayName: user.displayName,
                 uid: user.uid,
