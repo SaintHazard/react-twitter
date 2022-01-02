@@ -11,6 +11,7 @@ const Profile = ({ refreshUser, userObj }) => {
     const onSignOutClick = () => {
         authService.signOut();
         history.push("/");
+        refreshUser();
     };
 
     const getMyNweets = async () => {

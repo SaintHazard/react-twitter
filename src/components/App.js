@@ -8,10 +8,14 @@ function App() {
 
     useEffect(() => {
         authService.onAuthStateChanged((user) => {
-            setUserObj({
-                displayName: user.displayName,
-                uid: user.uid,
-            });
+            if (user) {
+                setUserObj({
+                    displayName: user.displayName,
+                    uid: user.uid,
+                });
+            } else {
+                setUserObj(null);
+            }
 
             setInit(true);
         });
@@ -23,10 +27,15 @@ function App() {
 
     const refreshUser = () => {
         const user = authService.currentUser;
-        setUserObj({
-            displayName: user.displayName,
-            uid: user.uid,
-        });
+
+        if (user) {
+            setUserObj({
+                displayName: user.displayName,
+                uid: user.uid,
+            });
+        } else {
+            setUserObj(null);
+        }
     };
 
     return (
